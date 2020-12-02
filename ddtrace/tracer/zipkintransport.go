@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"runtime/debug"
 	"strconv"
 )
 
@@ -15,6 +17,7 @@ type zipkinHTTPTransport struct {
 }
 
 func (t *zipkinHTTPTransport) send(p encoder) (body io.ReadCloser, err error) {
+	log.Printf("zipkinHTTPTransport.send: %s\n%s", t.traceURL, debug.Stack())
 	// prepare the client and send the payload
 	req, err := http.NewRequest("POST", t.traceURL, p)
 	if err != nil {

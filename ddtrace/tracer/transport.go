@@ -3,10 +3,12 @@ package tracer
 import (
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"os"
 	"runtime"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -99,6 +101,7 @@ func newHTTPTransport(addr string, roundTripper http.RoundTripper) *httpTranspor
 
 func (t *httpTransport) send(p encoder) (body io.ReadCloser, err error) {
 	// prepare the client and send the payload
+	log.Printf("httpTransport.send: %s\n%s", t.traceURL, debug.Stack())
 	req, err := http.NewRequest("POST", t.traceURL, p)
 	if err != nil {
 		return nil, fmt.Errorf("cannot create http request: %v", err)
