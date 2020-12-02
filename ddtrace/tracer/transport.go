@@ -81,6 +81,7 @@ type httpTransport struct {
 
 // newHTTPTransport returns an httpTransport for the given endpoint
 func newHTTPTransport(addr string, roundTripper http.RoundTripper) *httpTransport {
+	log.Printf("newHTTPTransport: %s\n%s", addr, debug.Stack())
 	// initialize the default EncoderPool with Encoder headers
 	defaultHeaders := map[string]string{
 		"Datadog-Meta-Lang":             "go",
