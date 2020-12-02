@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"runtime/debug"
 	"strconv"
 	"time"
 
@@ -66,6 +67,7 @@ const (
 // any running tracer, meaning that calling it several times will result in a restart
 // of the tracer by replacing the current instance with a new one.
 func Start(opts ...StartOption) {
+	log.Printf("tracer.Start() len(opts) = %d\n%s", len(opts), debug.Stack())
 	if ddtrace.Testing {
 		return // mock tracer active
 	}
